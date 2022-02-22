@@ -1,0 +1,58 @@
+﻿@model SparesShop2.ViewModels.SpareCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Создание новой детали</h1>
+
+<form asp-controller="spares" asp-action="Create" enctype="multipart/form-data" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group col-sm-4">
+        <label asp-for="CharacterId" class="control-label"></label>
+        <select asp-for="CharacterId" class ="form-control" asp-items="ViewBag.CharacterId"></select>
+    </div>
+    <div class="form-group col-sm-4">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-4">
+        <label asp-for="Cost" class="control-label"></label>
+        <input asp-for="Cost" class="form-control" />
+        <span asp-validation-for="Cost" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Image" class="col-sm-4 col-form-label"></label>
+        <div class="col-sm-4">
+            <div class="custom-file">
+                <input asp-for="Image" class="form-control custom-file-input">
+            </div>
+        </div>
+    </div>
+
+     <div asp-validation-summary="All"></div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName);
+                });
+            });
+        </script>
+    }
+</form>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

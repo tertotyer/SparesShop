@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SparesShop2.Models.Spare>
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="d-flex justify-content-center" style="font-weight: bold; margin-bottom:10px;">Список всех деталей</h2>
+@if (User.IsInRole("Admin"))
+{
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-primary" asp-controller="Spares" asp-action="Create">Добавить деталь</a>
+    </div>
+                    
+}
+
+<div class="row row-cols-1 row-cols-md-4">
+    @foreach (var spare in Model)
+    {
+        var photoPath = "~/images/" + (spare.ImagePath ?? "no_image.jpg");
+        <div class="col">
+        <div class="card mb-3 border-0" style="max-width:18rem;">
+       
+        <div class="card-header">
+            <a asp-controller="Characters" asp-action="ShowSparesCatefory" asp-route-characterId="@spare.CharacterId"></a>
+            <h4 class="text-center" style="font-weight: bold;"> <a asp-controller="Characters" asp-action="ShowSparesCatefory" 
+                asp-route-characterId="@spare.CharacterId">@spare.Character.Name</a> @spare.Name</h4>
+        </div>
+
+        <img class="card-img-top imageThumbnail" src="@photoPath"
+             asp-append-version="true" />
+
+        <div class="card-footer">
+            <p style="font-weight:bold;">Цена: @spare.Cost</p>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-warning" style="margin:0 !important" asp-action="Edit" asp-route-id="@spare.Id">Edit</a> 
+                <a class="btn btn-danger" style="margin:0 !important" asp-action="Delete" asp-route-id="@spare.Id">Delete</a> 
+                    
+            }
+            
+        </div>
+            </div>
+        </div>
+    
+    }
+</div>
