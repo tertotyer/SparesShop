@@ -128,7 +128,6 @@ namespace SparesShop2.Controllers
             {
                 try
                 {
-                    
                     _context.Update(spare);
                     await _context.SaveChangesAsync();
                 }
